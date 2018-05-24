@@ -53,7 +53,7 @@
                 "BlobStorage"
             ],
             "metadata": {
-                "description": "Storage Account type"
+                "description": "Storage Account kind"
             }
         },
         "location": {
