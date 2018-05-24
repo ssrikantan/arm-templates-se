@@ -16,6 +16,13 @@
                 "description": "The name of the Subnet in the VNet above that should be whitelisted in the Storage Account"
             }
         },
+        "vnetResourceGroup": {
+            "defaultValue": "vnetrg",
+            "type": "String",
+            "metadata": {
+                "description": "The name of the Resource group where the VNet is created"
+            }
+        },
         "location": {
             "defaultValue": "southindia",
             "type": "String",
@@ -33,7 +40,7 @@
     },
     "variables": {
         "subnetId": [
-            "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]"
+            "[resourceId(parameters('vnetResourceGroup'),'Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]"
         ]
     },
     "resources": [
