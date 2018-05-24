@@ -1,0 +1,61 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dbservername": {
+            "defaultValue": "dbservername",
+            "type": "String",
+            "metadata": {
+                "description": "The name of the Azure SQL Database Server Name pre-existing in this Azure Subscription"
+            }
+        },
+		   "VirtualNetworkRules_newVnetRule1_name": {
+            "defaultValue": "VNetRule001",
+            "type": "String",
+            "metadata": {
+                "description": "The name of the VNet Rule to created for Service Endpoint enablement - this has to be unique"
+            }
+        },
+        "location": {
+            "defaultValue": "southeastasia",
+            "type": "String",
+            "metadata": {
+                "description": "VNet and Azure DB Server should both exist in this region"
+            }
+        },
+        "vnetName": {
+            "defaultValue": "sevnet",
+            "type": "String",
+            "metadata": {
+                "description": "The name of the existing VNet for which the Service end point is to be enabled"
+            }
+        },
+        "subnetName": {
+            "defaultValue": "mainsubnet",
+            "type": "String",
+            "metadata": {
+                "description": "The name of the existing Subnet in the above VNet for which the Service end point is to be enabled"
+            }
+        },
+        "vnetResourceGroup": {
+            "defaultValue": "vnetrg",
+            "type": "String",
+            "metadata": {
+                "description": "The name of the Resource group in which the VNet exists"
+            }
+        }
+    },
+    "variables":{},
+    "resources": [
+		{
+            "comments": "Generalized from resource: '/subscriptions/fa8957fa-3d23-49da-a6ed-f209b86835c8/resourceGroups/sevnetrg/providers/Microsoft.Sql/servers/seazsqldbserver/virtualNetworkRules/newVnetRule1'.",
+            "type": "Microsoft.Sql/servers/virtualNetworkRules",
+            "name": "[concat(parameters('dbservername'), '/', parameters('virtualNetworkRules_newVnetRule1_name'))]",
+            "apiVersion": "2015-05-01-preview",
+            "scale": null,
+            "properties": {
+                "virtualNetworkSubnetId": "[resourceId(parameters('vnetResourceGroup'),'Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]"
+            }
+        }
+    ]
+}
