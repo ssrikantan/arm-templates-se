@@ -1,4 +1,5 @@
 # arm templates - service endpoints enablement
 ARM Templates to enable VNet Service end points based access to Azure Resources
 
-CreateVnetWithSe.json  - this ARM Template has to be run first to enable the SE endpoints feature on the target VNet +Subnet that ought to be allowed access to the Azure Services. This template enables for all Service types, i.e. Azure Storage, Cosmos DB and Azure SQL Database
+CreateVnetWithSe.json  - this ARM Template can be used when a VNet needs to be created first and the SE endpoints feature is to be enabled in it. This template enables SE for all Service types, i.e. Azure Storage, Cosmos DB and Azure SQL Database
+
