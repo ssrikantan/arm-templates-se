@@ -1,0 +1,62 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetName": {
+            "defaultValue": "sevnet",
+            "type": "String",
+            "metadata": {
+                "description": "The VNet name in this subscription that should be given access to the Storage account"
+            }
+        },
+        "subnetName": {
+            "defaultValue": "mainsubnet",
+            "type": "String",
+            "metadata": {
+                "description": "The name of the Subnet in the VNet above that should be whitelisted in the Storage Account"
+            }
+        },
+        "location": {
+            "defaultValue": "southindia",
+            "type": "String",
+            "metadata": {
+                "description": "VNet and Storage Account should both exist in this region"
+            }
+        },
+        "storageAccounts_sevnetstr_name": {
+            "defaultValue": "sevnetstr",
+            "type": "String",
+            "metadata": {
+                "description": "The Storage Account Name for which the Service endpoint needs to be enabled"
+            }
+        }
+    },
+    "variables": {
+        "subnetId": [
+            "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]"
+        ]
+    },
+    "resources": [
+        {
+            "comments": "Generalized from resource: '/subscriptions/fa8957fa-3d23-49da-a6ed-f209b86835c8/resourceGroups/sevnetrg/providers/Microsoft.Storage/storageAccounts/sevnetstr'.",
+            "type": "Microsoft.Storage/storageAccounts",
+            "name": "[parameters('storageAccounts_sevnetstr_name')]",
+            "apiVersion": "2017-10-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [
+                        {
+                            "id": "[variables('subnetId')[0]]",
+                            "action": "Allow",
+                            "state": "Succeeded"
+                        }
+                    ],
+                    "ipRules": [],
+                    "defaultAction": "Deny"
+                }
+            }
+        }
+    ]
+}
